@@ -2,7 +2,15 @@
 
 
 findUser() {
-	echo "option1"
+	echo "Lets go to find something"
+	echo "Which word do you want to find on the address?"
+	read varName
+	grep "$varName" direction.txt
+	echo "Press intro to go to menu"
+	read varOption
+	clear
+
+
 }
 
 addUser() {
@@ -25,29 +33,38 @@ addUser() {
 	
 
 
-	while [ "$option" != "no" ] && [ "$option" != "yes" ]
-	do
-		echo "All your information is correct (yes or no)?"
-		echo "$varName $varSurname $varMail $varPhone $varDirection $varCity $varCountry"
-		read option
+	echo "All your information is correct (yes or no)?"
+	echo "$varName $varSurname $varMail $varPhone $varDirection $varCity $varCountry"
+	read option
 
-		if [ $option = "yes" ] ; then
-			echo "$varName:$varSurname:$varMail:$varPhone:$varDirection:$varCity:$varCountry" >> direction.txt
-		elif [ $option = "no" ] ; then
-	    	echo "Lo has escrito mal vuelve a empezar"
-			addUser
-		else
-			echo "WTF are u writting"
-		fi
+	if [ $option = "yes" ] ; then
+		echo "$varName:$varSurname:$varMail:$varPhone:$varDirection:$varCity:$varCountry" >> direction.txt
+		echo "User Added!"
+		echo "press intro"
+		read varOption 
+	elif [ $option = "no" ] ; then
+		echo "Start again"
+		read varOption
+		addUser
+	else
+		echo "Start again"
+		read varOption
+		addUser
+	fi
 
-	done
 
 
 	
 }
 
 deleteUser() {
-	echo "option3"
+	echo "Which user do you want to Delete"
+	read varName
+	while read book
+	do	
+		search=`head -$? $BOOK | tail -1|tr ' ' '.'`
+		
+	done < direction.txt
 }
 
 editUser() {
@@ -56,6 +73,13 @@ editUser() {
 
 listUser(){
 	echo "I will show you all your directions!"
+	while read f
+	do
+		echo "$f"
+	done < direction.txt
+	echo "*************That's All!***************"
+	read varOption
+
 
 }
 
@@ -79,13 +103,14 @@ do
 			addUser
 			;;
 		3)
-			echo "OPTION3"
+			deleteUser
 			;;
 		4)
-			echo "Option4"
+			listUser
 			;;
 		5)
 			echo "Bye!!!"
+			exit
 			;;
 		*)
 			echo "Lo siento, no te he entendido"
