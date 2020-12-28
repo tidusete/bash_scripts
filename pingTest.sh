@@ -10,19 +10,19 @@ do
             echo "Is alive :)"
             varFlag=`echo $f | egrep '(\s[#]|^[#])[[:space:]]*(server)'`
             if [ "$?" -eq 0 ] ; then
-                echo "tinc almuadilla quitamela"
+                echo "Got # pls delete it"
                 f=`echo $f | sed 's/#//g'`
 
             else
-                echo "funciona ok"
+                echo "Everything planned"
             fi
         else
             echo "Is dead :("
             varFlag=`echo $f | egrep '(\s[#]|^[#])[[:space:]]*(server)'`
             if [ "$?" -eq 0 ] ; then
-                echo "tinc almuadilla per tant OK"
+                echo "Everything planned got #"
             else
-                echo "No tinc almuadilla ponmela"
+                echo "Need # because i'm offline"
                 f=`echo $f | sed 's/^/#/'`
             fi
         fi
