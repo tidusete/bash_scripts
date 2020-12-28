@@ -8,7 +8,6 @@ findUser() {
 	grep "$varName" direction.txt
 	echo "Press intro to go to menu"
 	read varOption
-	clear
 
 
 }
@@ -42,10 +41,6 @@ addUser() {
 		echo "User Added!"
 		echo "press intro"
 		read varOption 
-	elif [ $option = "no" ] ; then
-		echo "Start again"
-		read varOption
-		addUser
 	else
 		echo "Start again"
 		read varOption
@@ -58,17 +53,49 @@ addUser() {
 }
 
 deleteUser() {
-	echo "Which user do you want to Delete"
+	echo "Which user do you want to Delete? You can put name or surname or email"
 	read varName
-	while read book
-	do	
-		search=`head -$? $BOOK | tail -1|tr ' ' '.'`
-		
-	done < direction.txt
+	grep "$varName" direction.txt
+	echo "Are you sure to erase all this contacts?"
+	read input
+	case $input in
+		yes)
+			sed "/$varName/d" direction.txt > direction.tmp
+			mv direction.tmp direction.txt
+			echo "Users $varName deleted!"
+			;;
+		no)
+			deleteUser
+			;;
+		*)
+			;;
+	esac
+
+	
 }
 
 editUser() {
-	echo "option4"
+	echo "Which user do you want to edit?"
+	read varName
+	grep "$varName" direction.txt
+	echo "Are you sure to edit this user?"
+	read input
+	case $input in
+		yes)
+
+			;;
+			#https://www.javatpoint.com/bash-split-string#:~:text=In%20bash%2C%20a%20string%20can,the%20string%20in%20split%20form.
+			#asignacio a variables auxiliars per defecte,
+			#omplir correctament les dades
+			#borrar antic usuari
+			#inserir nou usuari 
+		no)
+			deleteUser
+			;;
+		*)
+			;;
+	esac
+
 }
 
 listUser(){
@@ -98,22 +125,36 @@ do
 	case $INPUT_STRING in
 		1)
 			findUser
+			clear
 			;;
 		2)
 			addUser
+			clear
 			;;
 		3)
-			deleteUser
+			echo "Do you want to delete user or edit it? (delete or edit)"
+			read option
+			case $option in
+				edit)
+					editUser
+					;;
+				delete)
+					deleteUser
+					;;
+				*)
+					;;
+			esac
 			;;
 		4)
 			listUser
+			clear
 			;;
 		5)
 			echo "Bye!!!"
 			exit
 			;;
 		*)
-			echo "Lo siento, no te he entendido"
+			echo "Choose a correct option"
 			;;
 	esac
 done

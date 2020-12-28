@@ -1,0 +1,21 @@
+options => {
+log_stats => 86400
+tcp_timeout => 15 ; zonefile-style comment
+include_optional_ns => true
+listen => [ 0.0.0.0 ]
+}
+
+plugins => {
+weighted => {
+multi = false # default
+service_types = up
+up_thresh => 0.1 # default
+
+xlaunch => {
+server1 = [ 1.1.1.1, 50 ]
+#server2 = [ 2.2.2.2, 50 ]
+#server3 = [ 3.3.3.3, 50 ]
+server4 = [ 8.8.4.4, 50 ]
+}
+}
+}
