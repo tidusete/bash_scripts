@@ -78,17 +78,56 @@ editUser() {
 	echo "Which user do you want to edit?"
 	read varName
 	grep "$varName" direction.txt
-	echo "Are you sure to edit this user?"
+	echo "Are you sure to edit this user (yes or no)?"
 	read input
 	case $input in
 		yes)
+			arrayText=`grep "$varName" direction.txt`			
+			
+
+			echo "Which is the Name [ `echo $arrayText | awk -F: '{print $1}'` ]?"
+			read varName
+			if [ -z "$varName" ]; then
+				varName=`echo $arrayText | awk -F: '{print $1}'`
+			fi
+			echo "Which is the Surname [ `echo $arrayText | awk -F: '{print $2}'` ]?"
+			read varSurname
+			if [ -z "$varSurname" ]; then
+				varSurname=`echo $arrayText | awk -F: '{print $2}'`
+			fi
+			echo "Which is the mail [ `echo $arrayText | awk -F: '{print $3}'` ]?"
+			read varMail
+			if [ -z "$varMail" ]; then
+				varMail=`echo $arrayText | awk -F: '{print $3}'`
+			fi
+			echo "Which is the Phone [ `echo $arrayText | awk -F: '{print $4}'` ]?"
+			read varPhone
+			if [ -z "$varPhone" ]; then
+				varPhone=`echo $arrayText | awk -F: '{print $4}'`
+			fi
+			echo "Which is the Direction [ `echo $arrayText | awk -F: '{print $5}'` ]?"
+			read varDirection
+			if [ -z "$varDirection" ]; then
+				varDirection=`echo $arrayText | awk -F: '{print $5}'`
+			fi
+			echo "Which is the City [ `echo $arrayText | awk -F: '{print $6}'` ]?"
+			read varCity
+			if [ -z "$varCity" ]; then
+				varCity=`echo $arrayText | awk -F: '{print $6}'`
+			fi
+			echo "Which is the Country [ `echo $arrayText | awk -F: '{print $7}'` ]?"
+			read varCountry
+			if [ -z "$varCountry" ]; then
+				varCountry=`echo $arrayText | awk -F: '{print $7}'`
+			fi
+
+			sed "/$arrayText/d" direction.txt > direction.tmp
+			echo "$varName:$varSurname:$varMail:$varPhone:$varDirection:$varCity:$varCountry" >> direction.tmp
+			mv direction.tmp direction.txt
+			echo "User $varName edited!"
 
 			;;
-			#https://www.javatpoint.com/bash-split-string#:~:text=In%20bash%2C%20a%20string%20can,the%20string%20in%20split%20form.
-			#asignacio a variables auxiliars per defecte,
-			#omplir correctament les dades
-			#borrar antic usuari
-			#inserir nou usuari 
+			
 		no)
 			deleteUser
 			;;
